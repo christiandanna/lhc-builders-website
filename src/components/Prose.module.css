@@ -1,0 +1,136 @@
+/* Shared layout pieces used by the inner pages. */
+
+.split {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: start;
+}
+
+@media (min-width: 940px) {
+  .split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  }
+
+  .splitWide {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+  }
+}
+
+.statement {
+  font-size: var(--step-3);
+  max-width: 18ch;
+  margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  max-width: 60ch;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.copy p:first-child {
+  font-size: var(--step-1);
+  color: var(--text);
+}
+
+.section--dark .copy,
+.onDark .copy {
+  color: var(--text-on-dark-muted);
+}
+
+.onDark .copy p:first-child {
+  color: var(--linen);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.frameWide {
+  aspect-ratio: 16 / 10;
+}
+
+.frame img {
+  object-fit: cover;
+}
+
+/* --- Numbered two-by-two grid -------------------------------------------- */
+
+.pairs {
+  display: grid;
+  gap: 0;
+}
+
+@media (min-width: 720px) {
+  .pairs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+.pair {
+  padding-block: clamp(1.75rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--rule);
+}
+
+.pairNumber {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--teal-deep);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.9rem;
+}
+
+.pairTitle {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-2);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.65rem;
+}
+
+.pairBody {
+  font-size: var(--step--1);
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 48ch;
+}
+
+/* --- Focus list ----------------------------------------------------------- */
+
+.focusList {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--rule-dark);
+}
+
+.focusItem {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-block: 0.9rem;
+  border-bottom: 1px solid var(--rule-dark);
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--linen);
+}
+
+.focusItem::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--teal);
+}

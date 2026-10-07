@@ -1,0 +1,29 @@
+{
+  "name": "lhc-builders-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marketing website for LHC Builders, a construction company in New Orleans, Louisiana.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "fetch-images": "node scripts/fetch-project-images.mjs",
+    "brand-assets": "node scripts/build-brand-assets.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.27",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "typescript": "^5.7.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.5",
+    "postcss": "^8.5.29"
+  }
+}

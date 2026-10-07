@@ -1,0 +1,19 @@
+.grid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(1.5rem, 3vw, 2.5rem);
+    row-gap: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  /* Every third card runs full width, which breaks the grid rhythm enough to
+     read as a portfolio rather than a product listing. */
+  .grid > *:nth-child(3n + 1) {
+    grid-column: 1 / -1;
+    --card-ratio: 16 / 9;
+  }
+}

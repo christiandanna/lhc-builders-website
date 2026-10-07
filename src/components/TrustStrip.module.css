@@ -1,0 +1,42 @@
+.strip {
+  background: var(--ink-soft);
+  color: var(--linen);
+  border-top: 1px solid rgba(247, 245, 241, 0.08);
+}
+
+/* A single wrapping row of focus areas rather than a grid of boxes — it reads
+   as a statement of scope, not as four competing claims. */
+.marquee {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2.25rem);
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 241, 0.82);
+  white-space: nowrap;
+}
+
+.marker {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--teal);
+  border-radius: 50%;
+}
+
+@media (max-width: 600px) {
+  .item {
+    font-size: var(--step--2);
+    letter-spacing: 0.1em;
+  }
+}

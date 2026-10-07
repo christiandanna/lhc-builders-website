@@ -1,0 +1,316 @@
+/* Base (mobile-first) rules first, then every media query at the bottom, so a
+   later base rule can never silently override a breakpoint. */
+
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  color: var(--linen);
+  transition:
+    background-color var(--t-base) var(--ease),
+    color var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease);
+}
+
+/* Over the hero: a top-down scrim so the logo and the links stay legible no
+   matter how bright the photograph behind them is. Without this, a pale sky
+   in a hero image washed the white logo out completely. */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--nav-h) + 48px);
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 16, 16, 0.62) 0%,
+    rgba(14, 16, 16, 0.34) 52%,
+    rgba(14, 16, 16, 0) 100%
+  );
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.header[data-solid="true"]::before,
+.header[data-menu="true"]::before {
+  opacity: 0;
+}
+
+/* Over the hero: no background, light text, one hairline to anchor it. */
+.header::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--rule-dark);
+  transition: background-color var(--t-base) var(--ease);
+}
+
+/* Past the hero: solid off-white, dark text. */
+.header[data-solid="true"] {
+  background: rgba(247, 245, 241, 0.94);
+  backdrop-filter: blur(10px);
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(27, 29, 30, 0.08);
+}
+
+.header[data-solid="true"]::after {
+  background: transparent;
+}
+
+/* While the mobile menu is open the bar itself must stay readable. */
+.header[data-menu="true"] {
+  color: var(--linen);
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+.header[data-menu="true"]::after {
+  background: transparent;
+}
+
+.inner {
+  position: relative;
+  /* Above both the scrim and the mobile panel. On mobile the only visible
+     children here are the logo and the toggle, and both must stay clickable
+     while the panel is open. */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  position: relative;
+  z-index: 2;
+}
+
+/* The two logo variants occupy the same box; opacity decides which shows. */
+.logoStack {
+  position: relative;
+  display: inline-flex;
+}
+
+.logoStack img {
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.logoDark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.header[data-solid="true"]:not([data-menu="true"]) .logoDark {
+  opacity: 1;
+}
+
+.header[data-solid="true"]:not([data-menu="true"]) .logoStack > :first-child img,
+.header[data-solid="true"]:not([data-menu="true"]) .logoStack > :first-child {
+  opacity: 0;
+}
+
+.nav {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cta {
+  display: none;
+}
+
+.link {
+  position: relative;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-block: 0.5rem;
+  opacity: 0.82;
+  transition: opacity var(--t-fast) var(--ease);
+}
+
+.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--teal-deep);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.link:hover {
+  opacity: 1;
+}
+
+.link:hover::after,
+.link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.link[aria-current="page"] {
+  opacity: 1;
+}
+
+/* --- Mobile toggle -------------------------------------------------------- */
+
+.toggle {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 6px;
+  width: 48px;
+  height: 48px;
+  margin-right: -12px;
+  padding: 0 11px;
+}
+
+.toggle span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  transition:
+    transform var(--t-base) var(--ease),
+    opacity var(--t-fast) var(--ease);
+}
+
+.toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* --- Mobile panel --------------------------------------------------------- */
+
+.panel {
+  position: fixed;
+  inset: 0;
+  /* Inside the header's own stacking context, below `.inner` (z-index 2) so the
+     logo and the close button stay on top of the open panel. The header's own
+     z-index already lifts the whole thing above the page. */
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: calc(var(--nav-h) + 2rem) var(--gutter) calc(2rem + env(safe-area-inset-bottom));
+  background: var(--ink);
+  color: var(--linen);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition:
+    opacity var(--t-base) var(--ease),
+    transform var(--t-base) var(--ease),
+    visibility var(--t-base) var(--ease);
+}
+
+.panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.panelNav {
+  display: flex;
+  flex-direction: column;
+}
+
+.panelLink {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: clamp(0.85rem, 2.4vw, 1.2rem);
+  border-bottom: 1px solid var(--rule-dark);
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 8vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.panelLink span {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-on-dark-muted);
+}
+
+.panelLink[aria-current="page"] {
+  color: var(--teal);
+}
+
+.panelFoot {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.panelMeta {
+  font-size: var(--step--1);
+  color: var(--text-on-dark-muted);
+  line-height: 1.7;
+}
+
+.panelMeta strong {
+  display: block;
+  color: var(--linen);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: var(--step--2);
+  margin-bottom: 0.3rem;
+}
+
+/* --- Desktop -------------------------------------------------------------- */
+
+@media (min-width: 1180px) {
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.1rem, 1.5vw, 1.9rem);
+    margin-left: auto;
+  }
+
+  .cta {
+    display: inline-flex;
+  }
+
+  .toggle {
+    display: none;
+  }
+
+  /* The panel is mobile-only. Hiding it outright means a resize while open
+     cannot leave a full-screen overlay stuck on a desktop viewport. */
+  .panel {
+    display: none;
+  }
+}

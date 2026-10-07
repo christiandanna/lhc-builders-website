@@ -1,0 +1,41 @@
+.bar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 80;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.6rem var(--gutter) calc(0.6rem + env(safe-area-inset-bottom));
+  background: rgba(27, 29, 30, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--rule-dark);
+  transform: translateY(110%);
+  transition: transform var(--t-base) var(--ease);
+}
+
+.bar[data-visible="true"] {
+  transform: none;
+}
+
+.bar .btn {
+  /* `min-width: 0` matters: a flex item will not shrink below its min-content
+     width without it, and `.btn` sets `white-space: nowrap`. Without this the
+     pair overflowed the viewport at 375px. */
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 50px;
+  padding-inline: 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+}
+
+/* The call button takes only the room its label needs. */
+.bar .btn--outline-light {
+  flex: 0 0 auto;
+}
+
+/* Desktop has the navbar CTA permanently in view; this would be clutter. */
+@media (min-width: 1180px) {
+  .bar {
+    display: none;
+  }
+}

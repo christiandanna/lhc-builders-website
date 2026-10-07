@@ -1,0 +1,39 @@
+.header {
+  display: grid;
+  gap: 1.25rem 4rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* Title left, supporting copy right — an editorial masthead rather than a
+   centred stack. Collapses to one column below 900px. */
+@media (min-width: 900px) {
+  .header[data-split="true"] {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: end;
+  }
+}
+
+.eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: var(--step-4);
+  max-width: 18ch;
+}
+
+.header[data-split="false"] .title {
+  max-width: 24ch;
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.aside p {
+  max-width: 48ch;
+}

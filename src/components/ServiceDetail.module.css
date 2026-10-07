@@ -1,0 +1,82 @@
+.item {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+  border-top: 1px solid var(--rule);
+  /* Clears the fixed navbar when jumped to from an anchor link. */
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+
+@media (min-width: 940px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  /* Alternate which side the image sits on, so the page does not read as a
+     single repeating row. */
+  .item:nth-child(even) .media {
+    order: 2;
+  }
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.media img {
+  object-fit: cover;
+}
+
+.index {
+  display: block;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--teal-deep);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.9rem;
+}
+
+.title {
+  font-size: var(--step-3);
+  max-width: 16ch;
+  margin-bottom: 0.5rem;
+}
+
+.headline {
+  font-size: var(--step-1);
+  color: var(--text);
+  margin-bottom: 1.1rem;
+  max-width: 34ch;
+}
+
+.body {
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 54ch;
+  margin-bottom: 1.25rem;
+}
+
+.credit {
+  margin-bottom: 1.75rem;
+  font-size: var(--step--2);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.creditLink {
+  color: var(--teal-deep);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  transition: color var(--t-fast) var(--ease);
+}
+
+.creditLink:hover {
+  color: var(--ink);
+}
